@@ -44,7 +44,7 @@ export default function ProjectDetailClient({
       {/* Hero */}
       <section
         className="relative overflow-hidden"
-        style={{ padding: "140px 60px 80px" }}
+        style={{ padding: "50px 60px 80px" }}
       >
         <div
           className="absolute rounded-full pointer-events-none"
@@ -108,7 +108,7 @@ export default function ProjectDetailClient({
                     "linear-gradient(135deg, var(--accent), var(--accent2))",
                 }}
               >
-                Live Demo ↗
+                <span className=" hover:text-[#FC6C9C]"> Live Demo ↗</span>
               </a>
             )}
             {project.githubUrl && (
@@ -131,7 +131,7 @@ export default function ProjectDetailClient({
                   e.currentTarget.style.background = "transparent";
                 }}
               >
-                View on GitHub
+                <span className=" hover:text-accent">View on GitHub</span>
               </a>
             )}
           </div>
@@ -171,32 +171,85 @@ export default function ProjectDetailClient({
       <section style={{ padding: "0 60px 80px" }}>
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <h2
-              className="font-head font-bold text-2xl tracking-[-1px] mb-4"
-              style={{ color: "var(--text)" }}
-            >
-              Project Overview
-            </h2>
+            <div>
+              <h2
+                className="font-head font-bold text-2xl tracking-[-1px] mb-4"
+                style={{ color: "var(--text)" }}
+              >
+                Project Overview
+              </h2>
 
-            {/* Dynamic overview from API */}
-            {project.overviewBody ? (
-              project.overviewBody.split("\n").map((paragraph, i) => (
+              {/* Dynamic overview from API */}
+              {project.overviewBody ? (
+                project.overviewBody.split("\n").map((paragraph, i) => (
+                  <p
+                    key={i}
+                    className="font-light leading-relaxed mb-4"
+                    style={{ color: "var(--muted)" }}
+                  >
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
                 <p
-                  key={i}
                   className="font-light leading-relaxed mb-4"
                   style={{ color: "var(--muted)" }}
                 >
-                  {paragraph}
+                  {project.description}
                 </p>
-              ))
-            ) : (
-              <p
-                className="font-light leading-relaxed mb-4"
-                style={{ color: "var(--muted)" }}
-              >
-                {project.description}
-              </p>
-            )}
+              )}
+            </div>
+            <div>
+              {/* Key Features — Dynamic from API */}
+              {project.features && project.features.length > 0 && (
+                <section style={{ padding: "0 " }}>
+                  <div className="max-w-4xl  mx-auto">
+                    <h2
+                      className="font-head font-bold text-2xl tracking-[-1px] my-2"
+                      style={{ color: "var(--text)" }}
+                    >
+                      Key Features
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {project.features.map((f) => (
+                        <div
+                          key={f.title}
+                          className="rounded-2xl py-6 pl-3 hover:shadow shadow-white/7 transition-all duration-200"
+                          style={{
+                            background: "var(--surface)",
+                            border: "1px solid var(--border)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor =
+                              "rgba(124,108,252,0.3)";
+                            e.currentTarget.style.transform =
+                              "translateY(-3px)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "var(--border)";
+                            e.currentTarget.style.transform = "translateY(0)";
+                          }}
+                        >
+                          <div className="text-2xl mb-3">{f.icon}</div>
+                          <h3
+                            className="font-head font-bold text-base mb-2"
+                            style={{ color: "var(--text)" }}
+                          >
+                            {f.title}
+                          </h3>
+                          <p
+                            className="text-sm font-light leading-relaxed"
+                            style={{ color: "var(--muted)" }}
+                          >
+                            {f.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col gap-5">
@@ -213,11 +266,11 @@ export default function ProjectDetailClient({
               >
                 Tech Stack
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium"
+                    className="px-3 py-1.5 border-[1.5px] rounded-full text-xs font-medium"
                     style={tagColor(tag)}
                   >
                     {tag}
@@ -245,10 +298,10 @@ export default function ProjectDetailClient({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-sm transition-opacity hover:opacity-75"
+                    className="flex items-center justify-between text-sm transition-opacity hover:opacity-100"
                     style={{ color: "var(--accent)" }}
                   >
-                    <span>🌐 Live Demo</span>
+                    <span className="hover:text-[#FC6C9C]">🌐 Live Demo</span>
                     <span>↗</span>
                   </a>
                 )}
@@ -260,10 +313,13 @@ export default function ProjectDetailClient({
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-sm transition-opacity hover:opacity-75"
+                    className="flex items-center justify-between text-sm transition-opacity   hover:opacity-100"
                     style={{ color: "var(--accent)" }}
                   >
-                    <span>🐙 GitHub Repo</span>
+                    <span className="flex gap-2 items-center ">
+                      <FaGithub />
+                      <span className=" hover:text-accent"> GitHub Repo</span>
+                    </span>
                     <span>↗</span>
                   </a>
                 )}
@@ -300,57 +356,9 @@ export default function ProjectDetailClient({
         </div>
       </section>
 
-      {/* Key Features — Dynamic from API */}
-      {project.features && project.features.length > 0 && (
-        <section style={{ padding: "0 60px 80px" }}>
-          <div className="max-w-4xl mx-auto">
-            <h2
-              className="font-head font-bold text-2xl tracking-[-1px] mb-8"
-              style={{ color: "var(--text)" }}
-            >
-              Key Features
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {project.features.map((f) => (
-                <div
-                  key={f.title}
-                  className="rounded-2xl p-6 transition-all duration-200"
-                  style={{
-                    background: "var(--surface)",
-                    border: "1px solid var(--border)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(124,108,252,0.3)";
-                    e.currentTarget.style.transform = "translateY(-3px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--border)";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                >
-                  <div className="text-2xl mb-3">{f.icon}</div>
-                  <h3
-                    className="font-head font-bold text-base mb-2"
-                    style={{ color: "var(--text)" }}
-                  >
-                    {f.title}
-                  </h3>
-                  <p
-                    className="text-sm font-light leading-relaxed"
-                    style={{ color: "var(--muted)" }}
-                  >
-                    {f.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Related */}
       {related.length > 0 && (
-        <section style={{ padding: "60px", background: "var(--bg2)" }}>
+        <section style={{ padding: "40px", background: "var(--bg2)" }}>
           <div className="max-w-4xl mx-auto">
             <h2
               className="font-head font-bold text-2xl tracking-[-1px] mb-8"
@@ -358,7 +366,7 @@ export default function ProjectDetailClient({
             >
               Other Projects
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1  md:grid-cols-3 gap-5">
               {related.map((p, i) => {
                 const relGradient =
                   p.gradient ?? gradients[i % gradients.length];
@@ -419,6 +427,7 @@ export default function ProjectDetailClient({
 // ========================
 
 import { useState } from "react";
+import { FaGithub, FaGithubSquare } from "react-icons/fa";
 
 function ImageSlider({
   images,
