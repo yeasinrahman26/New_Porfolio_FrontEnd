@@ -3,20 +3,17 @@
 import Link from "next/link";
 import { Project } from "@/types";
 
-const tagColor = (tag: string): { bg: string; color: string } => {
-  const map: Record<string, { bg: string; color: string }> = {
-    React: { bg: "rgba(108,252,204,0.1)", color: "#6cfccc" },
-    "Next.js": { bg: "rgba(255,255,255,0.06)", color: "#8886a0" },
-    "Node.js": { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" },
-    MongoDB: { bg: "rgba(252,108,156,0.1)", color: "#fc6c9c" },
-    Express: { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" },
-    TypeScript: { bg: "rgba(108,252,204,0.08)", color: "#6cfccc" },
-    "Socket.io": { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" },
-    Stripe: { bg: "rgba(108,252,204,0.1)", color: "#6cfccc" },
-    OpenAI: { bg: "rgba(252,108,156,0.1)", color: "#fc6c9c" },
-    Tailwind: { bg: "rgba(108,252,204,0.08)", color: "#6cfccc" },
-  };
-  return map[tag] ?? { bg: "rgba(255,255,255,0.06)", color: "#8886a0" };
+const TAG_COLORS = [
+  { bg: "rgba(108,252,204,0.1)", color: "#6cfccc" }, // Green/Teal
+  { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" }, // Purple
+  { bg: "rgba(252,108,156,0.1)", color: "#fc6c9c" }, // Pink
+];
+
+const tagColor = (
+  tag: string,
+  index: number,
+): { bg: string; color: string } => {
+  return TAG_COLORS[index % TAG_COLORS.length];
 };
 
 const gradients = [
@@ -68,11 +65,11 @@ export default function ProjectDetailClient({
           </Link>
 
           <div className="flex flex-wrap gap-2 mb-6">
-            {project.tags.map((tag) => (
+            {project.tags.map((tag, index) => (
               <span
                 key={tag}
                 className="px-3 py-1 rounded-full text-xs font-medium tracking-wide"
-                style={tagColor(tag)}
+                style={tagColor(tag, index)}
               >
                 {tag}
               </span>
@@ -267,11 +264,11 @@ export default function ProjectDetailClient({
                 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag) => (
+                {project.tags.map((tag, index) => (
                   <span
                     key={tag}
                     className="px-3 py-1.5 border-[1.5px] rounded-full text-xs font-medium"
-                    style={tagColor(tag)}
+                    style={tagColor(tag, index)}
                   >
                     {tag}
                   </span>
@@ -425,9 +422,8 @@ export default function ProjectDetailClient({
 // ========================
 // IMAGE SLIDER COMPONENT
 // ========================
-
 import { useState } from "react";
-import { FaGithub, FaGithubSquare } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 function ImageSlider({
   images,
@@ -437,23 +433,31 @@ function ImageSlider({
   title: string;
 }) {
   const [current, setCurrent] = useState(0);
-  const sorted = [...images].sort((a, b) => a.order - b.order);
-
+  const [imgError, setImgError] = useState<Record<number, boolean>>({});
+  // const sorted = [...images].sort((a, b) => a.order - b.order);
+  const sorted = images;
   return (
     <div className="relative">
       {/* Main Image */}
       <div
-        className="w-full rounded-2xl overflow-hidden relative"
+        className="w-full rounded-2xl overflow-hidden relative bg-surface"
         style={{
           height: 400,
           border: "1px solid var(--border)",
         }}
       >
-        <img
-          src={sorted[current].url}
-          alt={sorted[current].alt || title}
-          className="w-full h-full object-cover transition-opacity duration-300"
-        />
+        {imgError[current] ? (
+          // Fallback if image fails
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1a103a] to-[#2d1445]">
+            <span className="text-6xl">🖼️</span>
+          </div>
+        ) : (
+          <img
+            src={sorted[current].url}
+            alt={sorted[current].alt || title}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
 
       {/* Navigation — only show if multiple images */}

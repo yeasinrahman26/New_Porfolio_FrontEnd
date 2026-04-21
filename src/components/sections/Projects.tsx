@@ -21,7 +21,7 @@ export default function Projects({ projects }: ProjectsProps) {
 
         {/* Grid */}
         <div className="grid md:grid-cols-3 gap-6 mt-10">
-          {projects.map((project, index) => (
+          {projects.slice(0, 5).map((project, index) => (
             <Link
               key={project.id}
               href={`/projects/${project.id}`}

@@ -1,22 +1,19 @@
 import { Project } from "@/types";
 
-const tagColor = (tag: string) => {
-  const map: Record<string, string> = {
-    React: "bg-accent/10 text-accent",
-    "Next.js": "bg-white/10 text-[#8886a0]",
-    "Node.js": "bg-accent2/10 text-accent2",
-    MongoDB: "bg-pink-400/10 text-pink-400",
-    Express: "bg-accent2/10 text-accent2",
-    TypeScript: "bg-accent/10 text-accent",
-    "Socket.io": "bg-accent2/10 text-accent2",
-    Stripe: "bg-accent/10 text-accent",
-    OpenAI: "bg-pink-400/10 text-pink-400",
-    Tailwind: "bg-accent/10 text-accent",
-  };
+const TAG_COLORS = [
+  { bg: "rgba(108,252,204,0.1)", color: "#6cfccc" }, // Green/Teal
+  { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" }, // Purple
+  { bg: "rgba(252,108,156,0.1)", color: "#fc6c9c" }, // Pink
+  { bg: "rgba(252,196,108,0.1)", color: "#fcc46c" }, // Orange/Amber
+  { bg: "rgba(108,180,252,0.1)", color: "#6cb4fc" }, // Blue
+];
 
-  return map[tag] ?? "bg-white/10 text-[#8886a0]";
+const tagColor = (
+  tag: string,
+  index: number,
+): { bg: string; color: string } => {
+  return TAG_COLORS[index % TAG_COLORS.length];
 };
-
 const gradients = [
   "bg-gradient-to-br from-[#1a103a] to-[#2d1445]",
   "bg-gradient-to-br from-[#0a2420] to-[#0f3832]",
@@ -73,12 +70,11 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       <div className="p-6 flex-1">
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-3">
-          {project.tags.map((tag) => (
+          {project.tags.slice(0, 5).map((tag, index) => (
             <span
               key={tag}
-              className={`px-3 py-1 rounded-full text-[11px] font-medium tracking-wide ${tagColor(
-                tag,
-              )}`}
+              className="pr-3 py-1 rounded-full text-[11px] font-medium tracking-wide"
+              style={tagColor(tag, index)}
             >
               {tag}
             </span>
