@@ -7,21 +7,28 @@ import {
   SiJavascript,
   SiTailwindcss,
   SiHtml5,
-//   SiCss3,
+  //   SiCss3,
   SiExpress,
   SiPython,
   SiMongodb,
   SiPostgresql,
   SiMysql,
   SiGit,
-//   SiVisualstudiocode,
+  //   SiVisualstudiocode,
   SiPostman,
   SiVercel,
   SiNetlify,
   SiDocker,
   SiRedux,
   SiFirebase,
-//   SiAmazonaws,
+  SiSocketdotio,
+  SiRender,
+  SiShadcnui,
+  SiJsonwebtokens,
+  SiAxios,
+  SiCodeproject,
+  SiMongoose,
+  //   SiAmazonaws,
 } from "react-icons/si";
 
 import { FaNodeJs, FaGithub, FaFigma } from "react-icons/fa";
@@ -29,12 +36,16 @@ import { FaNodeJs, FaGithub, FaFigma } from "react-icons/fa";
 export const iconMap: Record<string, IconType> = {
   // Frontend
   SiNextdotjs,
+  SiMongoose,
   SiReact,
   SiTypescript,
   SiJavascript,
   SiTailwindcss,
   SiHtml5,
-//   SiCss3,
+  SiShadcnui,
+  SiCodeproject,
+  SiAxios,
+  //   SiCss3,
   SiRedux,
 
   // Backend
@@ -42,6 +53,8 @@ export const iconMap: Record<string, IconType> = {
   SiExpress,
   SiPython,
   SiFirebase,
+  SiSocketdotio,
+  SiJsonwebtokens,
 
   // Database
   SiMongodb,
@@ -51,7 +64,7 @@ export const iconMap: Record<string, IconType> = {
   // Tools
   SiGit,
   FaGithub,
-//   SiVisualstudiocode,
+  //   SiVisualstudiocode,
   FaFigma,
   SiPostman,
 
@@ -59,5 +72,6 @@ export const iconMap: Record<string, IconType> = {
   SiVercel,
   SiNetlify,
   SiDocker,
-//   SiAmazonaws,
+  SiRender,
+  //   SiAmazonaws,
 };

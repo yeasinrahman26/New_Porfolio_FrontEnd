@@ -15,6 +15,8 @@ interface SkillFormProps {
 const categories = ["Frontend", "Backend", "Database", "Tools", "Deployment"];
 const iconNames = Object.keys(iconMap);
 
+console.log("iconName",iconNames)
+
 function buildInitialForm(skill?: ApiSkill | null) {
   return {
     name: skill?.name || "",
@@ -115,7 +117,7 @@ export default function SkillForm({
           <label className={labelClass}>Icon Name *</label>
           <select
             name="icon_name"
-            value={form.icon_name}
+            value={form.icon_name }
             onChange={handleChange}
             required
             className={inputClass}

@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 import { Stat } from "@/types";
 
 const stats: Stat[] = [
-  { value: "3+", label: "Years Experience" },
+  { value: "1+", label: "Years Experience" },
   { value: "20+", label: "Projects Built" },
-  { value: "10+", label: "Happy Clients" },
+  { value: "5+", label: "Happy Clients" },
 ];
 
 const codeLines = [

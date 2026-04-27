@@ -7,6 +7,8 @@ const TAG_COLORS = [
   { bg: "rgba(108,252,204,0.1)", color: "#6cfccc" }, // Green/Teal
   { bg: "rgba(124,108,252,0.1)", color: "#7c6cfc" }, // Purple
   { bg: "rgba(252,108,156,0.1)", color: "#fc6c9c" }, // Pink
+  
+  
 ];
 
 const tagColor = (
@@ -64,7 +66,7 @@ export default function ProjectDetailClient({
             ← Back to Projects
           </Link>
 
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag, index) => (
               <span
                 key={tag}
@@ -74,7 +76,7 @@ export default function ProjectDetailClient({
                 {tag}
               </span>
             ))}
-          </div>
+          </div> */}
 
           <h1
             className="font-head font-extrabold leading-none tracking-[-3px] mb-6"
@@ -99,13 +101,13 @@ export default function ProjectDetailClient({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-medium text-base transition-all duration-150 hover:opacity-90 hover:scale-[1.02]"
+                className="inline-flex border hover:text-[#FC6C9C] border-accent/50 items-center gap-2 px-8 py-3.5 rounded-full text-white font-medium text-base transition-all duration-150 hover:opacity-90 hover:scale-[1.02]"
                 style={{
                   background:
                     "linear-gradient(135deg, var(--accent), var(--accent2))",
                 }}
               >
-                <span className=" hover:text-[#FC6C9C]"> Live Demo ↗</span>
+                <span className=" "> Live Demo ↗</span>
               </a>
             )}
             {project.githubUrl && (
@@ -113,7 +115,7 @@ export default function ProjectDetailClient({
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-normal transition-all duration-200"
+                className="inline-flex  items-center gap-2 px-8 py-3.5 rounded-full text-base font-normal transition-all duration-200"
                 style={{
                   background: "transparent",
                   border: "1px solid var(--border)",
@@ -142,7 +144,8 @@ export default function ProjectDetailClient({
             <ImageSlider images={project.images} title={project.title} />
           ) : (
             <div
-              className="w-full rounded-2xl flex items-center justify-center relative overflow-hidden"
+              className="w-full rounded-2xl flex items-center 
+              justify-center relative overflow-hidden"
               style={{
                 height: 400,
                 background: gradient,
@@ -424,6 +427,8 @@ export default function ProjectDetailClient({
 // ========================
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
+import Image from "next/image";
+import Loader from "@/components/shared/Loader";
 
 function ImageSlider({
   images,
@@ -449,13 +454,17 @@ function ImageSlider({
         {imgError[current] ? (
           // Fallback if image fails
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1a103a] to-[#2d1445]">
-            <span className="text-6xl">🖼️</span>
+            <Loader />
           </div>
         ) : (
           <img
+            key={current}
             src={sorted[current].url}
             alt={sorted[current].alt || title}
             className="w-full h-full object-cover"
+            onError={() =>
+              setImgError((prev) => ({ ...prev, [current]: true }))
+            }
           />
         )}
       </div>
@@ -465,10 +474,11 @@ function ImageSlider({
         <>
           {/* Arrows */}
           <button
+            aria-label="Previous image"
             onClick={() =>
               setCurrent((prev) => (prev === 0 ? sorted.length - 1 : prev - 1))
             }
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+            className="absolute  left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
             style={{
               background: "rgba(0,0,0,0.6)",
               border: "1px solid rgba(255,255,255,0.1)",
@@ -479,6 +489,7 @@ function ImageSlider({
           </button>
 
           <button
+            aria-label="Next image"
             onClick={() =>
               setCurrent((prev) => (prev === sorted.length - 1 ? 0 : prev + 1))
             }
@@ -498,12 +509,11 @@ function ImageSlider({
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className="w-2 h-2 rounded-full transition-all duration-200"
-                style={{
-                  background:
-                    i === current ? "var(--accent)" : "rgba(255,255,255,0.2)",
-                  transform: i === current ? "scale(1.3)" : "scale(1)",
-                }}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                  i === current
+                    ? "bg-gray-700 scale-125"
+                    : "bg-white/30 scale-100"
+                }`}
               />
             ))}
           </div>

@@ -13,24 +13,31 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
   const Icon = iconMap[skill.iconName];
 
   return (
-    <div className="bg-surface border border-border rounded-2xl p-6 hover:-translate-y-1 hover:border-accent/20 transition-all duration-400">
-      {/* Icon render */}
-      <div
-        className="text-3xl mb-4"
-        style={{
-          filter: `drop-shadow(0 0 6px ${skill.color}40)`,
-        }}
-      >
-        {Icon ? (
-          <Icon style={{ color: skill.color }} />
-        ) : (
-          <span style={{ color: skill.color }}>⚡</span>
-        )}
-      </div>
+    <div
+      className="bg-surface border
+     border-border rounded-2xl 
+     p-6 hover:-translate-y-1 hover:border-accent/20 transition-all 
+     duration-400"
+    >
+      <div className="flex  gap-3  justify-start items-center">
+        {/* Icon render */}
+        <div
+          className="text-3xl mb-4"
+          style={{
+            filter: `drop-shadow(0 0 6px ${skill.color}40)`,
+          }}
+        >
+          {Icon ? (
+            <Icon style={{ color: skill.color }} />
+          ) : (
+            <span style={{ color: skill.color }}>⚡</span>
+          )}
+        </div>
 
-      <h3 className="font-syne text-base font-700 text-text mb-4">
-        {skill.name}
-      </h3>
+        <h3 className="font-syne text-base font-700 text-text mb-4">
+          {skill.name}
+        </h3>
+      </div>
 
       {/* Progress bar */}
       <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-2">
@@ -43,7 +50,7 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
         />
       </div>
 
-      <span className="text-xs text-muted">{skill.percentage}%</span>
+      {/* <span className="text-xs text-muted">{skill.percentage}%</span> */}
     </div>
   );
 }

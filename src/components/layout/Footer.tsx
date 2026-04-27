@@ -1,6 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IoMail, IoLogoWhatsapp } from "react-icons/io5";
 import { HiDocumentText } from "react-icons/hi";
+import Link from "next/link";
 
 const socialLinks = [
   {
@@ -38,12 +39,12 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Left - Logo & Tagline */}
           <div className="flex flex-col items-center md:items-start">
-            <a
-              href="#"
+            <Link
+              href="/"
               className="font-syne text-2xl font-bold gradient-text tracking-tight"
             >
               {"< YRS. />"}
-            </a>
+            </Link>
             <p className="text-muted text-sm mt-2">
               Crafting exceptional digital experiences
             </p>
