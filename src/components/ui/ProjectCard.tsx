@@ -38,7 +38,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   return (
     <div
       className="
-        group flex flex-col h-full rounded-[22px] overflow-hidden
+        group flex flex-col h-full rounded-xl overflow-hidden
         bg-surface border border-border
         transition-all duration-300
         hover:-translate-y-2 hover:border-accent/40
@@ -47,7 +47,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     >
       {/* Thumbnail */}
       <div
-        className={`h-48 flex items-center justify-center relative overflow-hidden ${
+        className={`h-72 flex items-center justify-center relative overflow-hidden ${
           !isCSS ? gradient : ""
         }`}
         style={isCSS ? { background: gradient } : undefined}
@@ -57,7 +57,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           <img
             src={project.images[0].url}
             alt={project.images[0].alt || project.title}
-            className="w-full h-full object-cover relative z-10"
+            className="w-full h-full object-cover   relative z-10"
           />
         ) : (
           <span className="relative z-10 text-5xl">{emoji}</span>
